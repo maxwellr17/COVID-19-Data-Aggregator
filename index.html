@@ -1,0 +1,48 @@
+<!doctype html>
+<html ng-app="covidApp">
+<head>
+    <title>Covid Data Aggregator</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script type ="text/javascript" src="covidTS.js"></script>
+
+    <!-- for plotting -->
+    <script data-require="angular-resource@1.4.8" data-semver="1.4.8" src="https://code.angularjs.org/1.4.8/angular-resource.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-chart.js/0.10.2/angular-chart.js"></script>
+
+    <link rel="stylesheet" href="covid.css">
+</head>
+<body>
+    <h1> COVID-19 Tracker</h1>
+     <div ng-controller="covidCtrl" ng-model-instant>
+        <select name="countrySelect" id="countrySelect" ng-model="selectedCountry" ng-change="countryChanged()">
+            <option value="">Select a Country</option> <!-- not selected / blank option -->
+            <option ng-repeat="item in countryList" ng-model-instant>{{item}}</option>
+        </select>
+        <br>
+        <div ng-if="selectedCountry">
+            <h3>Covid Data for {{selectedCountry}}</h3>
+            <h5>Cases and Deaths</h5>
+            <div id='chart'>
+                <canvas id="line" class="chart chart-line" 
+                chart-data="combinedConfirmedAndDeaths" chart-labels="chartLabels" 
+                chart-options="chartOptions" chart-series="chartSeries" 
+                chart-dataset-override="datasetOverride"></canvas>
+            </div>
+        
+            <h5>Daily Changes</h5>
+    
+            <div id='chart'>
+                <canvas id="line" class="chart chart-line" 
+                chart-data="combinedConfirmedAndDeathsDeltas" chart-labels="chartLabels" 
+                chart-options="chartOptions" chart-series="chartSeriesDeltas" 
+                chart-dataset-override="datasetOverride"></canvas>
+            </div>
+        </div>
+        
+        
+    </div>
+    
+</body>
+
+</html>
